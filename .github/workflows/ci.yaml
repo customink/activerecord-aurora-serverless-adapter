@@ -14,10 +14,13 @@ jobs:
       # - name: Setup Env
       #   run: |
       #     echo "::set-env name=AROR_RAILS_VERSION::${{ matrix.rails }}"
-      - name: Setup Ruby
+      - name: Setup (ruby)
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5.x
+      - name: Setup (project)
+        run: |
+          ./bin/setup
       - name: Test
         run: |
           ./bin/test
