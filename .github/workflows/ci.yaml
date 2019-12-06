@@ -20,6 +20,7 @@ jobs:
           ruby-version: 2.5.x
       - name: Setup (project)
         run: |
+          gem install bundler
           ./bin/setup
       - name: Test
         run: |
