@@ -3,11 +3,11 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        rails:
-          - 'rails_v5.2.x'
-          - 'rails_v6.0.x'
+    # strategy:
+    #   matrix:
+    #     rails:
+    #       - 'rails_v5.2.x'
+    #       - 'rails_v6.0.x'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
