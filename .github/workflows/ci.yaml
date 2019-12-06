@@ -3,21 +3,25 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        rails:
-          - 'rails_v5.2.x'
-          - 'rails_v6.0.x'
+    # strategy:
+    #   matrix:
+    #     rails:
+    #       - 'rails_v5.2.x'
+    #       - 'rails_v6.0.x'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
       # - name: Setup Env
       #   run: |
       #     echo "::set-env name=AROR_RAILS_VERSION::${{ matrix.rails }}"
-      - name: Setup Ruby
+      - name: Setup (ruby)
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5.x
+      - name: Setup (project)
+        run: |
+          gem install bundler
+          ./bin/setup
       - name: Test
         run: |
           ./bin/test

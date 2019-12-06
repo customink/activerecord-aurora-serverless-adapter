@@ -22,6 +22,3 @@ DEPENDENCIES
   appraisal
   minitest
   rake
-
-BUNDLED WITH
-   1.17.3
