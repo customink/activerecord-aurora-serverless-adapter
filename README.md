@@ -1,3 +1,4 @@
+[![CI Status](https://github.com/customink/activerecord-aurora-serverless-adapter/workflows/CI/badge.svg)](https://launch-editor.github.com/actions?nwo=customink%activerecord-aurora-serverless-adapter&workflowID=CI)
 
 # Activerecord::Aurora::Serverless::Adapter
 
