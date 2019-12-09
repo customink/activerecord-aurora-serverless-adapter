@@ -11,13 +11,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      # - name: Setup Env
-      #   run: |
-      #     echo "::set-env name=AROR_RAILS_VERSION::${{ matrix.rails }}"
       - name: Setup (ruby)
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5.x
+      - name: Setup (env)
+        run: |
+          echo "::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_ID }}"
+          echo "::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          echo "::set-env name=AASA_SECRET_ARN::${{ secrets.AASA_SECRET_ARN }}"
+          echo "::set-env name=AASA_RESOURCE_ARN::${{ secrets.AASA_RESOURCE_ARN }}"
       - name: Setup (project)
         run: |
           gem install bundler

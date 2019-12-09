@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+touch .env
+
+docker-compose \
+  --project-name aasa \
+  build

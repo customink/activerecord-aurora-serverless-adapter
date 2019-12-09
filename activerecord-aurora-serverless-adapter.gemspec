@@ -17,7 +17,11 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.add_runtime_dependency     'activerecord', '>= 5.2'
+  spec.add_runtime_dependency     'aws-sdk-rdsdataservice'
   spec.add_development_dependency 'appraisal'
+  spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
 end
