@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  cdk:
+    build:
+      context: .
+      dockerfile: Dockerfile-cdk
+    environment:
+      - AWS_PROFILE=${AWS_PROFILE}
+      - AASA_MASTER_USER=${AASA_MASTER_USER}
+      - AASA_MASTER_PASS=${AASA_MASTER_PASS}
+    volumes:
+      - ~/.aws:/root/.aws:delegated
+      - .:/var/task:delegated

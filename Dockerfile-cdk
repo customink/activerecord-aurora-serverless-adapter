@@ -1,0 +1,3 @@
+FROM lambci/lambda:build-nodejs12.x
+ENV PATH="/var/task/test/aurora-serverless/node_modules/.bin:${PATH}"
+WORKDIR /var/task

@@ -1,3 +1,4 @@
+# Rails
 /.bundle/
 /.yardoc
 /_yardoc/
@@ -6,3 +7,13 @@
 /pkg/
 /spec/reports/
 /tmp/
+# Personal Deploy Scripts
+/test/bin/deploy-aurora-ci
+# Typescript & CDK
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+.cdk.staging
+cdk.out
+.env
