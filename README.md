@@ -2,7 +2,10 @@
 
 # Activerecord::Aurora::Serverless::Adapter
 
-TODO...
+<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>**⚠️ WORK IN PROGRESS**<br>Simple ActiveRecord MySQL adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/). Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
+
+**[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://lamby.custominktech.com)**
+
 
 ## Contributing
 
