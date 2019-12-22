@@ -1,10 +1,10 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "activerecord/aurora/serverless/adapter/version"
+require "active_record/connection_adapters/aurora_serverless/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "activerecord-aurora-serverless-adapter"
-  spec.version       = Activerecord::Aurora::Serverless::Adapter::VERSION
+  spec.version       = ActiveRecord::ConnectionAdapters::AuroraServerless::VERSION
   spec.authors       = ["Ken Collins"]
   spec.email         = ["kcollins@customink.com"]
   spec.summary       = %q{ActiveRecord Adapter for Amazon Aurora Serverless}
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.add_runtime_dependency     'activerecord', '>= 5.2'
+  spec.add_runtime_dependency     'activerecord', '>= 6.0'
   spec.add_runtime_dependency     'aws-sdk-rdsdataservice'
   spec.add_development_dependency 'appraisal'
   spec.add_development_dependency 'dotenv'

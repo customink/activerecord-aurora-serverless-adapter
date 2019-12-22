@@ -1,0 +1,1 @@
+require 'aasa_helper'

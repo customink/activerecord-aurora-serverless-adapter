@@ -1,0 +1,12 @@
+connections:
+  mysql:
+    arunit:
+      database: 'activerecord_unittest'
+      adapter: aurora_serverless
+      secret_arn: <%= ENV['AASA_SECRET_ARN'] %>
+      resource_arn: <%= ENV['AASA_RESOURCE_ARN'] %>
+    arunit2:
+      database: 'activerecord_unittest2'
+      adapter: aurora_serverless
+      secret_arn: <%= ENV['AASA_SECRET_ARN2'] %>
+      resource_arn: <%= ENV['AASA_RESOURCE_ARN2'] %>

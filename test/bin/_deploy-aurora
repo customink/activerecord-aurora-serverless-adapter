@@ -5,12 +5,4 @@ pushd test/aurora-serverless
 
 npm install
 tsc
-cdk deploy \
-  --require-approval never
-
-# TODO: Remove Once Merged: https://github.com/aws/aws-cdk/issues/5216
-# (see alos lib/aurora-serverless-stack.ts)
-aws rds modify-db-cluster \
-  --db-cluster-identifier aasa-aurora \
-  --enable-http-endpoint \
-  --apply-immediately
+cdk deploy --require-approval never "*"
