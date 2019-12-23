@@ -16,6 +16,7 @@ module ActiveRecord
           end
 
           def query(sql)
+            raise ActiveRecord::StatementInvalid if @closed
             AuroraServerless::Mysql2::Result.new execute_statement(sql)
           end
 
@@ -28,7 +29,7 @@ module ActiveRecord
           end
 
           def close
-            nil
+            @closed = true
           end
 
           def automatic_close=(*)
@@ -43,6 +44,7 @@ module ActiveRecord
           end
 
           def ping
+            return false if @closed
             query('SELECT 1').to_a.first.first == 1
           rescue
             false

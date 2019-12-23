@@ -1,4 +1,28 @@
 
+## Stats
+
+```
+Finished in 3352.854458s, 2.0069 runs/s, 5.1974 assertions/s.
+6729 runs, 17426 assertions, 88 failures, 72 errors, 20 skips
+```
+
+* (~70) Misc time preisions errors.
+  - TimePrecisionTest#test_formatting_time_according_to_precision
+* (11) ActiveRecord::AdapterNotSpecified: The `foo` database is not configured for the `test` environment.
+  - ConnectionHandlerTest#test_establish_connection_using_2_level_config_defaults_to_default_env_primary_db:
+* (8) Query pattern(s) /BEGIN/i, /COMMIT/i not found.
+  - ConcurrentTransactionTest#test_accessing_raw_connection_disables_lazy_transactions
+* (4) Cannot add or update a child row: a foreign key constraint fails
+  - ConcurrentTransactionTest#test_checking_in_connection_reenables_lazy_transactions
+* (26) ArgumentError: invalid configuration option
+  - :pool, :prepared_statements, :reaping_frequency, :strict, :flags, advisory_locks
+  - PooledConnectionsTest#test_pooled_connection_checkin_two:
+  - ActiveRecord::DatabaseTasksDumpSchemaCacheTest#test_dump_schema_cache:
+
+## Continue After Timeout
+
+There is a `continue_after_timeout` setting which the SDK recommends using on DDL statements. Also there is a Mysql2 client method called `#abandon_results!` which is called during batch (maybe other) places.
+
 ## Configure Connection
 
 In the `connection_adapters/abstract_mysql_adapter.rb:707` make sure we take a look at things like wait timeout, etc.
@@ -35,10 +59,7 @@ Communications link failure (Aws::RDSDataService::Errors::BadRequestException)
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
 ```
 
-## Misc ActiveRecord Code/Conditions To Remember
+## Connection Pool
 
-These are things that stuck out to me to circle back to when the full test suite is in better condition.
-
-* `def cacheable_query` - Make sure we are not using prepared statements.
-* `def multi_statements_enabled?(flags)` - Not sure if this should be true or false.
+Read the SDK docs. Thinking we should only have one or maybe just let the pool work at both the ActiveRecord level and the SDK level? Oh, also... check the HTTP Persistence options too!
 
