@@ -5,6 +5,7 @@ Dotenv.load('.env')
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'cases/helper' unless ENV['TEST_FILES']
+Rails.backtrace_cleaner.remove_silencers! if ENV['REMOVE_SILENCERS']
 
 module ActiveRecord
   module ConnectionAdapters
@@ -42,6 +43,8 @@ module ActiveRecord
 
         MYSQL_CREATE_TABLE_SQL = %[
           CREATE TABLE IF NOT EXISTS aurora_test (
+            id int NOT NULL AUTO_INCREMENT,
+            PRIMARY KEY (id),
             null_test VARCHAR(10),
             bit_test BIT,
             tiny_int_test TINYINT,

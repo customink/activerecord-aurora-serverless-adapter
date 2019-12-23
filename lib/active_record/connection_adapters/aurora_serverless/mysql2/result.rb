@@ -118,6 +118,7 @@ module ActiveRecord
             'LONGBLOB'   => :blob_value,
             'LONGTEXT'   => :string_value,
           }.freeze
+          private_constant :VALUE_METHODS
 
         end
       end

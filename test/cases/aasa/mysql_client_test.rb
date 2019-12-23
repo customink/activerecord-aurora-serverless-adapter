@@ -44,6 +44,13 @@ module ActiveRecord
           expect(client.affected_rows).must_equal 3
         end
 
+        it '#last_id' do
+          execute "INSERT INTO aurora_test (int_test) VALUES (1)"
+          expect(client.last_id).must_equal 2
+          execute "INSERT INTO aurora_test (int_test) VALUES (1)"
+          expect(client.last_id).must_equal 3
+        end
+
       end
     end
   end

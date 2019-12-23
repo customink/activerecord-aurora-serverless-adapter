@@ -2,22 +2,45 @@
 
 # Activerecord Aurora Serverless Adapter
 
-<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>**⚠️ WORK IN PROGRESS**<br><br>Simple ActiveRecord MySQL adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/). Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
+<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>**⚠️ WORK IN PROGRESS**<br><br>Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/) via the [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html) internface. Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
 
 **[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://lamby.custominktech.com)**
 
 
 ## Highlights
 
-* Developed and tested with Aurora Serverless MySQL v5.6.
-* Replaces the mysql2 gem requirement with [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html).
-* Emoji support via `utf8mb4`. Please configure your cluster's parameter group. See our [CDK Stack](https://github.com/customink/activerecord-aurora-serverless-adapter/blob/master/test/aurora-serverless/lib/aurora-serverless-stack.ts) for parameter examples.
+This gem allows Rails to seamless use
 
-Here are some misc gotchas.
+* No need for the `mysql2` gem at all!
+* Developed and tested with Aurora Serverless MySQL v5.6.
+* Emoji support via `utf8mb4`. Please configure your cluster's parameter group. See our [CDK Stack](/blob/master/test/aurora-serverless/lib/aurora-serverless-stack.ts) for examples.
+
+Here are some misc features that work differently for the Mysql2 adapter under Aurora Serverless.
 
 * Multiple schemas are not supported.
 * We assume that all database times are UTC.
 * Prepared statement are not supported.
+* Batch statements are not supported.
+
+
+## Usage
+
+Add the gem to your `Gemfile`. Remember, You **DO NOT** have to add the `mysql2` gem.
+
+```ruby
+gem 'activerecord-aurora-serverless-adapter'
+```
+
+Assuming you have [created your database](/blob/master/test/aurora-serverless/lib/aurora-serverless-stack.ts) with the Data API enabled and [configured your secrets](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html) then configure your `database.yml` file like so.
+
+```yaml
+database: 'mydatabase'
+adapter: aurora_serverless
+secret_arn: arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd2ASwipxeWw-Bdsiww
+resource_arn: arn:aws:rds:us-east-1:123456789012:cluster:mydatabase
+```
+
+**IMPORTANT:** Please do not use any standard Rails or Mysql2 configuration options here. All or ignored or removed. However, please feel free to use any valid [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html#initialize-instance_method) options here. They will all be passed to the Clients `#initialize` method.
 
 
 ## Contributing
@@ -76,6 +99,7 @@ From here you can run `npm`, `tsc`, `cdk` or whatever commands are needed.
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
 
 ## Code of Conduct
 

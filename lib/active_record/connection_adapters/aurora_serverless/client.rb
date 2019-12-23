@@ -6,13 +6,14 @@ module ActiveRecord
                     :resource_arn,
                     :secret_arn,
                     :raw_client,
-                    :affected_rows
+                    :affected_rows,
+                    :last_id
 
-        def initialize(database, resource_arn, secret_arn, client_options = {})
+        def initialize(database, resource_arn, secret_arn, options = {})
           @database = database
           @resource_arn = resource_arn
           @secret_arn = secret_arn
-          @raw_client = Aws::RDSDataService::Client.new(client_options)
+          @raw_client = Aws::RDSDataService::Client.new(client_options(options))
           @transactions = Concurrent::Array.new
           @affected_rows = 0
         end
@@ -30,7 +31,8 @@ module ActiveRecord
             include_result_metadata: true,
             transaction_id: @transactions.first
           }).tap do |r|
-            @affected_rows = r.number_of_records_updated
+            @affected_rows = affected_rows_result(r)
+            @last_id = last_id_result(r)
           end
         end
 
@@ -58,6 +60,23 @@ module ActiveRecord
             resource_arn: resource_arn,
             transaction_id: id
           }) if id
+        end
+
+        private
+
+        def client_options(options)
+          options.except :idle_timeout
+        end
+
+        def affected_rows_result(result)
+          result.number_of_records_updated || 0
+        end
+
+        def last_id_result(result)
+          fields = result.generated_fields || []
+          field = fields.last
+          return unless field
+          field.long_value || field.string_value || field.double_value
         end
 
       end
