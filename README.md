@@ -31,7 +31,7 @@ Add the gem to your `Gemfile`. Remember, You **DO NOT** have to add the `mysql2`
 gem 'activerecord-aurora-serverless-adapter'
 ```
 
-Assuming you have [created your database](/blob/master/test/aurora-serverless/lib/aurora-serverless-stack.ts) with the Data API enabled and [configured your secrets](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html) then configure your `database.yml` file like so.
+Assuming you have [created your database](/test/aurora-serverless/lib/aurora-serverless-stack.ts) with the Data API enabled and [configured your secrets](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html) then configure your `database.yml` file like so.
 
 ```yaml
 database: 'mydatabase'
