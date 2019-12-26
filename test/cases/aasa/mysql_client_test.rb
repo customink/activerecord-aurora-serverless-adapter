@@ -12,6 +12,8 @@ module ActiveRecord
         end
 
         it '#escape' do
+          expect(client.escape("\\ \001 ' \n \\n \"")).
+            must_equal("\\\\ \u0001 \\' \\n \\\\n \\\"")
           expect(client.escape("abc'def\"ghi\0jkl%mno")).
             must_equal("abc\\'def\\\"ghi\\0jkl%mno")
         end

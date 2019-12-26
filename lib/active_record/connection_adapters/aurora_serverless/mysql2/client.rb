@@ -7,6 +7,17 @@ module ActiveRecord
       module Mysql2
         module Client
 
+          ESCAPE_MAP = {
+            "\x00" => "0",
+            "\n"   => "n",
+            "\r"   => "r",
+            "\\"   => "\\",
+            "'"    => "'",
+            '"'    => '"'
+          }.freeze
+
+          ESCAPE_PATTERN = Regexp.union(*ESCAPE_MAP.keys)
+
           def self.default_query_options
             {}
           end
@@ -17,7 +28,8 @@ module ActiveRecord
 
           def query(sql)
             raise ActiveRecord::StatementInvalid if @closed
-            AuroraServerless::Mysql2::Result.new execute_statement(sql)
+            result = execute_statement(sql)
+            AuroraServerless::Mysql2::Result.new(result)
           end
 
           def server_info
@@ -37,10 +49,7 @@ module ActiveRecord
           end
 
           def escape(string)
-            string.
-              gsub("'", "\\\\'").
-              gsub('"', '\\\"').
-              gsub("\0", '\\\0')
+            string.gsub(ESCAPE_PATTERN) { |x| "\\#{ESCAPE_MAP[x]}" }
           end
 
           def ping

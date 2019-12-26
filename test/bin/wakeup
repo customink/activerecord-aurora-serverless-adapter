@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+docker-compose \
+  --project-name aasa \
+  run \
+  cdk \
+  ./test/bin/_wakeup

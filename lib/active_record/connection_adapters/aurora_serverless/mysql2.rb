@@ -9,6 +9,21 @@ module ActiveRecord
     class AuroraServerlessAdapter < Mysql2Adapter
       include AuroraServerless::Abstract
 
+      def self.name
+        'Mysql2Adapter'
+      end if ENV['AASA_ENV'] == 'test'
+
+      def mysql2_connection(config)
+        aurora_serverless_connection(config)
+      end
+
+      # Abstract Mysql Adapter
+
+      def supports_advisory_locks?
+        false
+      end
+
+
       private
 
       def connect
@@ -19,7 +34,33 @@ module ActiveRecord
       # Abstract Mysql Adapter
 
       def translate_exception(exception, message:, sql:, binds:)
-        ActiveRecord::StatementInvalid.new(message, sql: sql, binds: binds)
+        msg = exception.message
+        case msg
+        when /Duplicate entry/
+          RecordNotUnique.new(msg, sql: sql, binds: binds)
+        when /foreign key constraint fails/
+          InvalidForeignKey.new(msg, sql: sql, binds: binds)
+        when /Cannot add foreign key constraint/,
+             /referenced column .* in foreign key constraint .* are incompatible/
+          mismatched_foreign_key(msg, sql: sql, binds: binds)
+        when /Data too long for column/
+          ValueTooLong.new(msg, sql: sql, binds: binds)
+        when /Out of range value for column/
+          RangeError.new(msg, sql: sql, binds: binds)
+        when /Column .* cannot be null/,
+             /Field .* doesn't have a default value/
+          NotNullViolation.new(msg, sql: sql, binds: binds)
+        when /Deadlock found when trying to get lock/
+          Deadlocked.new(msg, sql: sql, binds: binds)
+        when /Lock wait timeout exceeded/
+          LockWaitTimeout.new(msg, sql: sql, binds: binds)
+        when /max_statement_time exceeded/, /Sort aborted/
+          StatementTimeout.new(msg, sql: sql, binds: binds)
+        when /Query execution was interrupted/
+          QueryCanceled.new(msg, sql: sql, binds: binds)
+        else
+          ActiveRecord::StatementInvalid.new(msg, sql: sql, binds: binds)
+        end
       end
 
       # Database Statements
@@ -41,7 +82,7 @@ module ActiveRecord
       end
 
       def max_allowed_packet
-        1048576
+        65536
       end
 
     end

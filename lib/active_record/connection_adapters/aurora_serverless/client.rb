@@ -14,8 +14,9 @@ module ActiveRecord
           @resource_arn = resource_arn
           @secret_arn = secret_arn
           @raw_client = Aws::RDSDataService::Client.new(client_options(options))
-          @transactions = Concurrent::Array.new
+          @transactions = []
           @affected_rows = 0
+          @debug_transactions = false # Development toggle.
         end
 
         def inspect
@@ -23,49 +24,69 @@ module ActiveRecord
         end
 
         def execute_statement(sql)
+          id = @transactions.first
+          debug_transactions "EXECUTE: #{sql}", id
           raw_client.execute_statement({
             sql: sql,
             database: database,
             secret_arn: secret_arn,
             resource_arn: resource_arn,
             include_result_metadata: true,
-            transaction_id: @transactions.first
+            transaction_id: id
           }).tap do |r|
             @affected_rows = affected_rows_result(r)
             @last_id = last_id_result(r)
           end
+        rescue Exception => e
+          if id && e.message == "Transaction #{id} is not found"
+            @transactions.shift
+            retry
+          else
+            raise e
+          end
         end
 
         def begin_db_transaction
-          @transactions.unshift(raw_client.begin_transaction({
+          id = raw_client.begin_transaction({
             database: database,
             secret_arn: secret_arn,
             resource_arn: resource_arn
-          }).transaction_id)
+          }).try(:transaction_id)
+          debug_transactions 'BEGIN', id
+          @transactions.unshift(id) if id
+          true
         end
 
         def commit_db_transaction
-          id = @transactions.pop
+          id = @transactions.shift
+          return unless id
+          debug_transactions 'COMMIT', id
           raw_client.commit_transaction({
             secret_arn: secret_arn,
             resource_arn: resource_arn,
             transaction_id: id
-          }) if id
+          })
+          true
+        rescue
+          @transactions.unshift(id) # For imminent rollback.
         end
 
         def exec_rollback_db_transaction
-          id = @transactions.pop
+          id = @transactions.shift
+          return unless id
+          debug_transactions 'ROLLBACK', id
           raw_client.rollback_transaction({
             secret_arn: secret_arn,
             resource_arn: resource_arn,
             transaction_id: id
-          }) if id
+          })
+          true
         end
 
         private
 
         def client_options(options)
-          options.except :idle_timeout
+          options.slice(*CLIENT_OPTIONS)
         end
 
         def affected_rows_result(result)
@@ -78,6 +99,52 @@ module ActiveRecord
           return unless field
           field.long_value || field.string_value || field.double_value
         end
+
+        def debug_transactions(name, id = 'NOID')
+          return unless @debug_transactions
+          ActiveRecord::Base.logger.debug "  \e[36m#{name} #{id} #{object_id}\e[0m"
+        end
+
+        # From AWS docs at https://amzn.to/35V6O8L
+        CLIENT_OPTIONS = %i[
+          credentials
+          region
+          access_key_id
+          active_endpoint_cache
+          client_side_monitoring
+          client_side_monitoring_client_id
+          client_side_monitoring_host
+          client_side_monitoring_port
+          client_side_monitoring_publisher
+          convert_params
+          disable_host_prefix_injection
+          endpoint
+          endpoint_cache_max_entries
+          endpoint_cache_max_threads
+          endpoint_cache_poll_interval
+          endpoint_discovery
+          log_formatter
+          log_level
+          logger
+          profile
+          retry_base_delay
+          retry_jitter
+          retry_limit
+          retry_max_delay
+          secret_access_key
+          session_token
+          stub_responses
+          validate_params
+          http_proxy
+          http_open_timeout
+          http_read_timeout
+          http_idle_timeout
+          http_continue_timeout
+          http_wire_trace
+          ssl_verify_peer
+          ssl_ca_bundle
+          ssl_ca_directory
+        ].freeze
 
       end
     end

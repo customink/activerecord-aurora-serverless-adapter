@@ -55,18 +55,18 @@ module ActiveRecord
         end
 
         it 'date_time_test' do
-          expect(value('date_time_test')).must_be_instance_of Time
-          expect(value('date_time_test').strftime("%Y-%m-%d %H:%M:%S")).must_equal '2010-04-04 11:44:00'
+          expect(value('date_time_test')).must_be_instance_of String
+          expect(value('date_time_test')).must_equal '2010-04-04 11:44:00'
         end
 
         it 'timestamp_test' do
-          expect(value('timestamp_test')).must_be_instance_of Time
-          expect(value('timestamp_test').strftime("%Y-%m-%d %H:%M:%S")).must_equal '2010-04-04 11:44:00'
+          expect(value('timestamp_test')).must_be_instance_of String
+          expect(value('timestamp_test')).must_equal '2010-04-04 11:44:00'
         end
 
         it 'time_test' do
-          expect(value('time_test')).must_be_instance_of Time
-          expect(value('time_test').strftime("%Y-%m-%d %H:%M:%S")).must_equal '2000-01-01 11:44:00'
+          expect(value('time_test')).must_be_instance_of String
+          expect(value('time_test')).must_equal '11:44:00'
         end
 
         it 'year_test' do

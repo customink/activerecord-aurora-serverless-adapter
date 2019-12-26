@@ -7,12 +7,11 @@ module ActiveRecord
     end
 
     def aurora_serverless_connection_from_config(config)
-      options = config.except :adapter, :database, :secret_arn, :resource_arn
       ConnectionAdapters::AuroraServerless::Client.new(
         config[:database],
         config[:resource_arn],
         config[:secret_arn],
-        options
+        config
       )
     end
     module_function :aurora_serverless_connection_from_config

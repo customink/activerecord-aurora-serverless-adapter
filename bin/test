@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
-# TODO: [FullSuite] Use this vs test file stuff below.
-# bundle exec rake test
+echo "Run our isolated tests..."
+ONLY_AASA=1 bundle exec rake test
 
-TEST_FILES="test/cases/aasa/mysql_client_test.rb,
-            test/cases/aasa/mysql_result_test.rb,
-            test/cases/aasa/mysql_types_test.rb" bundle exec rake test
+echo "Run ActiveRecord tests touching arunit2..."
+ONLY_ACTIVERECORD=1 AASA_ARUNIT2=1 bundle exec rake test
 
-TESTOPTS="--name='/create_record_with_pk_as_zero/'" \
-TEST_FILES_AR="test/cases/adapter_test.rb" bundle exec rake test
+echo "Run other isolated AASA_ARHABTM test..."
+ONLY_ACTIVERECORD=1 AASA_ARHABTM=1 bundle exec rake test
+echo "Run other isolated AASA_ARCONHANDLER test..."
+ONLY_ACTIVERECORD=1 AASA_ARCONHANDLER=1 bundle exec rake test
+
+echo "Run ActiveRecord test batches 1..."
+ONLY_ACTIVERECORD=1 AASA_BATCH=1 bundle exec rake test
+echo "Run ActiveRecord test batches 2..."
+ONLY_ACTIVERECORD=1 AASA_BATCH=2 bundle exec rake test
+echo "Run ActiveRecord test batches 3..."
+ONLY_ACTIVERECORD=1 AASA_BATCH=3 bundle exec rake test
