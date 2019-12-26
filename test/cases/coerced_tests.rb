@@ -115,6 +115,21 @@ module ActiveRecord
     class ConnectionHandlersMultiDbTest < ActiveRecord::TestCase
       # This tries to load PG for some reason.
       coerce_tests! :test_switching_connections_with_database_url
+
+      # No sqlite3 tests.
+      coerce_tests! :test_multiple_connection_handlers_works_in_a_threaded_environment,
+                    :test_time_precision_is_truncated_on_assignment_coerced,
+                    :test_formatting_time_according_to_precision_coerced
+    end
+  end
+end
+
+module ActiveRecord
+  module ConnectionAdapters
+    class ConnectionHandlerTest < ActiveRecord::TestCase
+      # No sqlite3 tests.
+      coerce_tests! :test_establish_connection_using_2_level_config_defaults_to_default_env_primary_db,
+                    :test_establish_connection_using_3_level_config_defaults_to_default_env_primary_db
     end
   end
 end

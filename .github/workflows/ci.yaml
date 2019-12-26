@@ -15,6 +15,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5.x
+      - name: Setup System
+        run: |
+          sudo apt-get install libsqlite3-dev
+          echo "::set-env name=MTSR_RAILS_VERSION::${{ matrix.rails }}"
       - name: Setup (env)
         run: |
           echo "::set-env name=AWS_DEFAULT_REGION::us-east-1"
@@ -27,13 +31,14 @@ jobs:
       - name: Setup (project)
         run: |
           gem install bundler
-          ./bin/setup
-      - name: Wakeup DB
-        run: |
-          ./test/bin/wakeup
+          ./bin/_setup
+      # ./bin/bootstrap
+      # - name: Wakeup DB
+      #   run: |
+      #     if ! ./test/bin/wakeup ; then sleep 45 ; fi
       - name: Test
         run: |
-          if ! ./test/bin/wakeup ; then sleep 45 ; fi
+          ./bin/_test
       # - name: Bundle
       #   run: |
       #     export BUNDLE_GEMFILE="${GITHUB_WORKSPACE}/gemfiles/${AROR_RAILS_VERSION}.gemfile"

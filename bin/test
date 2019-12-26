@@ -1,20 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Run our isolated tests..."
-ONLY_AASA=1 bundle exec rake test
-
-echo "Run ActiveRecord tests touching arunit2..."
-ONLY_ACTIVERECORD=1 AASA_ARUNIT2=1 bundle exec rake test
-
-echo "Run other isolated AASA_ARHABTM test..."
-ONLY_ACTIVERECORD=1 AASA_ARHABTM=1 bundle exec rake test
-echo "Run other isolated AASA_ARCONHANDLER test..."
-ONLY_ACTIVERECORD=1 AASA_ARCONHANDLER=1 bundle exec rake test
-
-echo "Run ActiveRecord test batches 1..."
-ONLY_ACTIVERECORD=1 AASA_BATCH=1 bundle exec rake test
-echo "Run ActiveRecord test batches 2..."
-ONLY_ACTIVERECORD=1 AASA_BATCH=2 bundle exec rake test
-echo "Run ActiveRecord test batches 3..."
-ONLY_ACTIVERECORD=1 AASA_BATCH=3 bundle exec rake test
+docker-compose \
+  --project-name aasa \
+  run \
+  ci \
+  ./bin/_test

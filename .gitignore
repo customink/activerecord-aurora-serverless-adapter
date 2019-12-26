@@ -7,6 +7,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+/vendor/bundle
 # Personal Deploy Scripts
 /test/bin/deploy-aurora-ci
 # Typescript & CDK

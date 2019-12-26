@@ -1,5 +1,22 @@
 version: "3.7"
 services:
+  ci:
+    build:
+      context: .
+      dockerfile: Dockerfile-ci
+    environment:
+      - AWS_PROFILE=${AWS_PROFILE}
+      - AASA_MASTER_USER=${AASA_MASTER_USER}
+      - AASA_MASTER_PASS=${AASA_MASTER_PASS}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AASA_SECRET_ARN=${AASA_SECRET_ARN}
+      - AASA_RESOURCE_ARN=${AASA_RESOURCE_ARN}
+      - AASA_SECRET_ARN2=${AASA_SECRET_ARN2}
+      - AASA_RESOURCE_ARN2=${AASA_RESOURCE_ARN2}
+    volumes:
+      - ~/.aws:/root/.aws:delegated
+      - .:/var/task:delegated
   cdk:
     build:
       context: .
