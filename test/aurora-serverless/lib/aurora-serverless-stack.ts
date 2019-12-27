@@ -36,7 +36,7 @@ function auroraProps(
     scalingConfiguration: {
       autoPause: true,
       minCapacity: 1,
-      maxCapacity: 16,
+      maxCapacity: 4,
       secondsUntilAutoPause: 3600
     }
   } as CfnDBClusterProps;

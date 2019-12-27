@@ -11,6 +11,7 @@ new AuroraServerlessStack(APP, "AuroraServerlessStack", {
   tags: {
     env: "dev",
     group: "shared",
-    application: "activerecord-aurora-serverless-adapter"
+    application: "activerecord-aurora-serverless-adapter",
+    owner: "kcollins"
   }
 });

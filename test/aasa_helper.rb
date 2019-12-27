@@ -10,9 +10,8 @@ require 'cases/helper' unless ENV['TEST_FILES'] || ENV['ONLY_AASA']
 require_relative 'support/aasa_coerceable'
 require_relative 'support/aasa_env'
 require_relative 'support/aasa_fixtures'
+require_relative 'support/aasa_minitest'
 Rails.backtrace_cleaner.remove_silencers! if ENV['REMOVE_SILENCERS']
-Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new()]
-Minitest::Retry.use! retry_count: 3
 
 module ActiveRecord
   module ConnectionAdapters
