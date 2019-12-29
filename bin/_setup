@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+bundle config --local path 'vendor/bundle'
+bundle install --jobs 4 --retry 3

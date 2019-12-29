@@ -3,39 +3,35 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     rails:
-    #       - 'rails_v5.2.x'
-    #       - 'rails_v6.0.x'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Setup (ruby)
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.5.x
-      - name: Setup (env)
+      - name: Environment
         run: |
+          echo "::set-env name=AWS_DEFAULT_REGION::us-east-1"
           echo "::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_ID }}"
           echo "::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          echo "::set-env name=AWS_DEFAULT_REGION::us-east-1"
           echo "::set-env name=AASA_SECRET_ARN::${{ secrets.AASA_SECRET_ARN }}"
           echo "::set-env name=AASA_RESOURCE_ARN::${{ secrets.AASA_RESOURCE_ARN }}"
           echo "::set-env name=AASA_SECRET_ARN2::${{ secrets.AASA_SECRET_ARN2 }}"
           echo "::set-env name=AASA_RESOURCE_ARN2::${{ secrets.AASA_RESOURCE_ARN2 }}"
-      - name: Setup (project)
+          mkdir -p vendor/bundle
+      - name: Bootstrap
         run: |
-          gem install bundler
+          ./bin/bootstrap
+      - name: Wakeup
+        run: |
+          ./bin/test-ci-setup
+          if ! ./test/bin/wakeup ; then sleep 90 ; fi
+      - name: Setup (cache)
+        id: cache-setup
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile.lock') }}
+      - name: Setup
+        run: |
           ./bin/setup
       - name: Test
         run: |
           ./bin/test
-      # - name: Bundle
-      #   run: |
-      #     export BUNDLE_GEMFILE="${GITHUB_WORKSPACE}/gemfiles/${AROR_RAILS_VERSION}.gemfile"
-      #     bundle install --jobs 4 --retry 3
-      # - name: Test
-      #   run: |
-      #     export BUNDLE_GEMFILE="${GITHUB_WORKSPACE}/gemfiles/${AROR_RAILS_VERSION}.gemfile"
-      #     bundle exec rake

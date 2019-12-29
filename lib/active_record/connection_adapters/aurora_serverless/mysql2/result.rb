@@ -60,9 +60,6 @@ module ActiveRecord
             case type
             when 'DECIMAL'   then type_cast_decimal(value)
             when 'DATE'      then type_cast_date(value)
-            when 'DATETIME'  then type_cast_datetime(value)
-            when 'TIMESTAMP' then type_cast_timestamp(value)
-            when 'TIME'      then type_cast_time(value)
             when 'YEAR'      then type_cast_year(value)
             else
               value
@@ -75,15 +72,6 @@ module ActiveRecord
 
           def type_cast_date(v)
             Date.parse(v)
-          end
-
-          def type_cast_datetime(v)
-            Time.parse(v)
-          end
-          alias type_cast_timestamp type_cast_datetime
-
-          def type_cast_time(v)
-            Time.parse(v).change(year: 2000, month: 1, day: 1)
           end
 
           def type_cast_year(v)

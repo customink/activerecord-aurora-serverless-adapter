@@ -1,3 +1,5 @@
+default_connection: mysql
+
 connections:
   mysql:
     arunit:
@@ -5,8 +7,14 @@ connections:
       adapter: aurora_serverless
       secret_arn: <%= ENV['AASA_SECRET_ARN'] %>
       resource_arn: <%= ENV['AASA_RESOURCE_ARN'] %>
+      # HTTP has no true sessions. Ensure base state.
+      variables:
+        foreign_key_checks: 1
     arunit2:
       database: 'activerecord_unittest2'
       adapter: aurora_serverless
       secret_arn: <%= ENV['AASA_SECRET_ARN2'] %>
       resource_arn: <%= ENV['AASA_RESOURCE_ARN2'] %>
+      # HTTP has no true sessions. Ensure base state.
+      variables:
+        foreign_key_checks: 1

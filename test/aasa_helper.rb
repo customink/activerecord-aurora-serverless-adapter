@@ -1,10 +1,16 @@
-ENV['RAILS_ENV'] = 'test'
+ENV['AASA_ENV'] = 'test'
 require 'bundler/setup'
 Bundler.require :default, :development
 Dotenv.load('.env')
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'cases/helper' unless ENV['TEST_FILES']
+require 'minitest/retry'
+require 'minitest/reporters'
+require 'cases/helper' unless ENV['TEST_FILES'] || ENV['ONLY_AASA']
+require_relative 'support/aasa_coerceable'
+require_relative 'support/aasa_env'
+require_relative 'support/aasa_fixtures'
+require_relative 'support/aasa_minitest'
 Rails.backtrace_cleaner.remove_silencers! if ENV['REMOVE_SILENCERS']
 
 module ActiveRecord

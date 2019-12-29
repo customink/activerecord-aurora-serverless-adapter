@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 docker-compose \
   --project-name aasa \
   run \
   ci \
-  ./bin/_setup
+  $@

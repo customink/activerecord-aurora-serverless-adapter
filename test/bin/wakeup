@@ -4,5 +4,5 @@ set -e
 docker-compose \
   --project-name aasa \
   run \
-  ci \
-  ./bin/_setup
+  cdk \
+  ./test/bin/_wakeup

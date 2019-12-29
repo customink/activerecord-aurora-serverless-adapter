@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# TODO: [FullSuite] Use this vs test file stuff below.
-# bundle exec rake test
-
-TEST_FILES="test/cases/aasa/mysql_client_test.rb,
-            test/cases/aasa/mysql_result_test.rb,
-            test/cases/aasa/mysql_types_test.rb" bundle exec rake test
-
-TESTOPTS="--name='/create_record_with_pk_as_zero/'" \
-TEST_FILES_AR="test/cases/adapter_test.rb" bundle exec rake test
+docker-compose \
+  --project-name aasa \
+  run \
+  ci \
+  ./bin/_test

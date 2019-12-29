@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set +e
+
+export AWS_PROFILE=${AWS_PROFILE:=default}
+export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:=us-east-1}
+
+aws rds-data execute-statement \
+  --database "activerecord_unittest" \
+  --secret-arn "${AASA_SECRET_ARN}" \
+  --resource-arn "${AASA_RESOURCE_ARN}" \
+  --sql "SELECT 1"
+
+aws rds-data execute-statement \
+  --database "activerecord_unittest2" \
+  --secret-arn "${AASA_SECRET_ARN2}" \
+  --resource-arn "${AASA_RESOURCE_ARN2}" \
+  --sql "SELECT 1"

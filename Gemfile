@@ -2,6 +2,8 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
+ENV['RAILS_VERSION'] = '6.0.2.1'
+
 # This allows us to bundle to Rails via Git to get the ActiveRecord test files
 # which comes down to a git tag. We can also use the `RAILS_VERSION` env variable
 # too as needed for a very specific/tiny version too.
@@ -25,4 +27,4 @@ version = ENV['RAILS_VERSION'] || begin
     ver
   end
 end
-gem 'rails', git: "git://github.com/rails/rails.git", tag: "v#{version}"
+gem 'rails', github: "rails/rails", tag: "v#{version}"
