@@ -84,7 +84,7 @@ module AASA
           [AASA_HELPER] + cases + [AASA_COERCED]
         end
       else
-        [AASA_HELPER] + ar_cases + [AASA_COERCED] + aasa_case
+        [AASA_HELPER] + ar_cases + [AASA_COERCED] + aasa_cases
       end.uniq
     end
 
