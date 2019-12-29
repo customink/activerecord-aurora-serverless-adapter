@@ -35,5 +35,5 @@ Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new()]
 #
 Minitest::Retry.use! retry_count: 3, verbose: true
 Minitest::Retry.on_retry do |klass, test_name, retry_count|
-  retry_foreign_key_checks
+  AASA::Mtr.retry_foreign_key_checks
 end
