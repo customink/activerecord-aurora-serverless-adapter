@@ -67,8 +67,8 @@ GIT
 PATH
   remote: .
   specs:
-    activerecord-aurora-serverless-adapter (5.2.0)
-      activerecord (>= 5.2)
+    activerecord-aurora-serverless-adapter (5.2.1)
+      activerecord (~> 5.2.0)
       aws-sdk-rdsdataservice
 
 GEM
