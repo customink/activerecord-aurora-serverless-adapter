@@ -16,6 +16,7 @@ Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora 
 
 This gem allows Rails to seamless use
 
+* Tested on Rails v5.2 and v6.0.
 * No need for the `mysql2` gem at all!
 * Developed and tested with Aurora Serverless MySQL v5.6.
 * Emoji support via `utf8mb4`. Please configure your cluster's parameter group. See our [CDK Stack](/blob/master/test/aurora-serverless/lib/aurora-serverless-stack.ts) for examples.
