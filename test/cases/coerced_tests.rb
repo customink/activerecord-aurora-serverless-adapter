@@ -132,3 +132,20 @@ module ActiveRecord
     end
   end
 end
+
+# ----------------
+# RAILS 5-2-stable
+# ----------------
+
+module ActiveRecord
+  class AdapterTest < ActiveRecord::TestCase
+    coerce_tests! :test_log_invalid_encoding,
+                  :test_create_record_with_pk_as_zero
+  end
+end
+
+module ActiveRecord
+  class DatabaseTasksUtilsTask < ActiveRecord::TestCase
+    coerce_all_tests!
+  end
+end

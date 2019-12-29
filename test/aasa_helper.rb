@@ -6,6 +6,7 @@ require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/retry'
 require 'minitest/reporters'
+require_relative 'support/aasa_mysqlpatch'
 require 'cases/helper' unless ENV['TEST_FILES'] || ENV['ONLY_AASA']
 require_relative 'support/aasa_coerceable'
 require_relative 'support/aasa_env'
@@ -158,3 +159,5 @@ module ActiveRecord
     end
   end
 end
+
+require "mocha/setup"

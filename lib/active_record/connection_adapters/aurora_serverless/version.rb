@@ -1,7 +1,7 @@
 module ActiveRecord
   module ConnectionAdapters
     module AuroraServerless
-      VERSION = "1.0.0"
+      VERSION = "5.2.0"
     end
   end
 end

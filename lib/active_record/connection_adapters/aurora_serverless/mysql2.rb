@@ -33,33 +33,32 @@ module ActiveRecord
 
       # Abstract Mysql Adapter
 
-      def translate_exception(exception, message:, sql:, binds:)
-        msg = exception.message
-        case msg
+      def translate_exception(exception, message)
+        case message
         when /Duplicate entry/
-          RecordNotUnique.new(msg, sql: sql, binds: binds)
+          RecordNotUnique.new(message)
         when /foreign key constraint fails/
-          InvalidForeignKey.new(msg, sql: sql, binds: binds)
+          InvalidForeignKey.new(message)
         when /Cannot add foreign key constraint/,
              /referenced column .* in foreign key constraint .* are incompatible/
-          mismatched_foreign_key(msg, sql: sql, binds: binds)
+          mismatched_foreign_key(message)
         when /Data too long for column/
-          ValueTooLong.new(msg, sql: sql, binds: binds)
+          ValueTooLong.new(message)
         when /Out of range value for column/
-          RangeError.new(msg, sql: sql, binds: binds)
+          RangeError.new(message)
         when /Column .* cannot be null/,
              /Field .* doesn't have a default value/
-          NotNullViolation.new(msg, sql: sql, binds: binds)
+          NotNullViolation.new(message)
         when /Deadlock found when trying to get lock/
-          Deadlocked.new(msg, sql: sql, binds: binds)
+          Deadlocked.new(message)
         when /Lock wait timeout exceeded/
-          LockWaitTimeout.new(msg, sql: sql, binds: binds)
+          LockWaitTimeout.new(message)
         when /max_statement_time exceeded/, /Sort aborted/
-          StatementTimeout.new(msg, sql: sql, binds: binds)
+          StatementTimeout.new(message)
         when /Query execution was interrupted/
-          QueryCanceled.new(msg, sql: sql, binds: binds)
+          QueryCanceled.new(message)
         else
-          ActiveRecord::StatementInvalid.new(msg, sql: sql, binds: binds)
+          ActiveRecord::StatementInvalid.new(message)
         end
       end
 

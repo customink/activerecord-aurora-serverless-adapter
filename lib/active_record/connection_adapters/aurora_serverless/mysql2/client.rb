@@ -63,6 +63,10 @@ module ActiveRecord
             nil
           end
 
+          def more_results?
+            false
+          end
+
         end
       end
       AuroraServerless::Client.include AuroraServerless::Mysql2::Client
