@@ -54,10 +54,9 @@ class TransactionTest < ActiveRecord::TestCase
                 :test_transactions_can_be_manually_materialized
 end
 
-# TOOD: This inherit (and run) the `TransactionTest` case file. However,
-# there is a slight change one fails due to a foreign key constraints likely
-# due to a thread or connection pool issue. Maybe even our connecting handling
-# hacks. Not sure. If you want to play, comment this out and.
+# TOOD: This inherits (and runs) the `TransactionTest` case file. However,
+# there is a slight chance one fails due to a foreign key constraints issue.
+# If you want to play, comment this out and.
 #
 # TESTOPTS="-n='/ConcurrentTransactionTest/'" ONLY_ACTIVERECORD=1 bundle exec rake
 #

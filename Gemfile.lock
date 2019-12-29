@@ -83,7 +83,7 @@ GIT
 PATH
   remote: .
   specs:
-    activerecord-aurora-serverless-adapter (0.1.0)
+    activerecord-aurora-serverless-adapter (1.0.0)
       activerecord (>= 6.0)
       aws-sdk-rdsdataservice
 
@@ -96,7 +96,7 @@ GEM
       rake
       thor (>= 0.14.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.259.0)
+    aws-partitions (1.260.0)
     aws-sdk-core (3.86.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)

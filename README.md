@@ -1,8 +1,13 @@
+
+<a href="https://www.youtube.com/watch?v=Q0cqKl6ktIg"<img alt="Aurora Serverless on Rails" src="https://user-images.githubusercontent.com/2381/71551059-c507f180-29ab-11ea-91dc-0e83a0ed317f.png"></a>
+
 [![CI Status](https://github.com/customink/activerecord-aurora-serverless-adapter/workflows/CI/badge.svg)](https://launch-editor.github.com/actions?nwo=customink%activerecord-aurora-serverless-adapter&workflowID=CI)
 
 # Activerecord Aurora Serverless Adapter
 
-<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>**⚠️ WORK IN PROGRESS**<br><br>Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/) via the [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html) internface. Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
+<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>
+
+Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/) via the [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html) internface. Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
 
 **[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://lamby.custominktech.com)**
 
@@ -18,14 +23,14 @@ This gem allows Rails to seamless use
 Here are some misc features that work differently for the Mysql2 adapter under Aurora Serverless.
 
 * Multiple schemas are not supported.
-* We assume that all database times are UTC.
-* Prepared statement are not supported.
+* Prepared statements are not supported.
 * Batch statements are not supported.
+* Advisory locks are not supported.
 
 
 ## Usage
 
-Add the gem to your `Gemfile`. Remember, You **DO NOT** have to add the `mysql2` gem.
+Add the gem to your `Gemfile`. Remember, You **DO NOT** have to add the `mysql2` gem. This adapter will replace the MySQL connection with the `Aws::RDSDataService::Client` API calls.
 
 ```ruby
 gem 'activerecord-aurora-serverless-adapter'
@@ -40,8 +45,7 @@ secret_arn: arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd2ASwip
 resource_arn: arn:aws:rds:us-east-1:123456789012:cluster:mydatabase
 ```
 
-**IMPORTANT:** Please do not use any standard Rails or Mysql2 configuration options here. All or ignored or removed. However, please feel free to use any valid [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html#initialize-instance_method) options here. They will all be passed to the Clients `#initialize` method.
-
+lease feel free to use any valid ActiveRecord configuration in your database.yml file. We also allow all [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html#initialize-instance_method) options here too! Any valid option will be passed to `Aws::RDSDataService::Client.new`.
 
 ## Contributing
 

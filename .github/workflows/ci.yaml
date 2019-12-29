@@ -3,11 +3,6 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     rails:
-    #       - 'rails_v5.2.x'
-    #       - 'rails_v6.0.x'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -27,7 +22,7 @@ jobs:
       - name: Wakeup
         run: |
           ./bin/test-ci-setup
-          if ! ./test/bin/wakeup ; then sleep 45 ; fi
+          if ! ./test/bin/wakeup ; then sleep 90 ; fi
       - name: Setup (cache)
         id: cache-setup
         uses: actions/cache@v1
