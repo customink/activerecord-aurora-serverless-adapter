@@ -1,9 +1,9 @@
 
-<a href="https://www.youtube.com/watch?v=Q0cqKl6ktIg"<img alt="Aurora Serverless on Rails" src="https://user-images.githubusercontent.com/2381/71551059-c507f180-29ab-11ea-91dc-0e83a0ed317f.png"></a>
-
-[![CI Status](https://github.com/customink/activerecord-aurora-serverless-adapter/workflows/CI/badge.svg)](https://launch-editor.github.com/actions?nwo=customink%activerecord-aurora-serverless-adapter&workflowID=CI)
-
 # Activerecord Aurora Serverless Adapter
+
+<a href="https://www.youtube.com/watch?v=Q0cqKl6ktIg"><img alt="Aurora Serverless on Rails" src="https://user-images.githubusercontent.com/2381/71551059-c507f180-29ab-11ea-91dc-0e83a0ed317f.png"></a>
+
+[![CI Status](https://github.com/customink/activerecord-aurora-serverless-adapter/workflows/CI/badge.svg)](https://github.com/customink/activerecord-aurora-serverless-adapter/actions)
 
 <a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>
 
