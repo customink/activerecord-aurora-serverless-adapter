@@ -1,5 +1,5 @@
 
-# Activerecord Aurora Serverless Adapter
+# ActiveRecord Aurora Serverless Adapter
 
 <a href="https://www.youtube.com/watch?v=Q0cqKl6ktIg"><img alt="Aurora Serverless on Rails" src="https://user-images.githubusercontent.com/2381/71551059-c507f180-29ab-11ea-91dc-0e83a0ed317f.png"></a>
 
@@ -7,7 +7,7 @@
 
 <a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>
 
-Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/) via the [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html) internface. Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
+Simple ActiveRecord Mysql2 adapter extensions to allow Rails to use [AWS Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/) via the [Aws::RDSDataService::Client](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html) interface. Perfect if you are using [Lamby](https://lamby.custominktech.com) to deploy your Rails applications to AWS Lambda.
 
 **[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://lamby.custominktech.com)**
 
@@ -59,7 +59,7 @@ Cloning the repo and running the tests locally is super easy assuming you have:
 1. Docker Installed
 2. AWS Account Configured
 
-These commands will use Docker to setup a node runtime leveraging [AWD CDK](https://github.com/aws/aws-cdk) to deploy a Aurora Serverless stack. Note, you may be to use/set `AWS_PROFILE` for the deploy command.
+These commands will use Docker to setup a node runtime leveraging [AWD CDK](https://github.com/aws/aws-cdk) to deploy an Aurora Serverless stack. Note, you may be to use/set `AWS_PROFILE` for the deploy command.
 
 ```s
 $ ./bin/bootstrap
@@ -68,7 +68,7 @@ $ export AASA_MASTER_PASS=supersecret
 $ ./test/bin/deploy-aurora
 ```
 
-The outputs of this deployed stack will containt an `AASASecretArn` and a `AASAAuroraClusterArn` value. Please place these into the local `.env` file in the following format where `{{ Value }}` is replaced.
+The outputs of this deployed stack will contain an `AASASecretArn` and a `AASAAuroraClusterArn` value. Please place these into the local `.env` file in the following format where `{{ Value }}` is replaced.
 
 ```
 AASA_SECRET_ARN={{ AASASecretArn }}
