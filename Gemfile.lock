@@ -86,6 +86,7 @@ PATH
     activerecord-aurora-serverless-adapter (6.0.0)
       activerecord (>= 6.0)
       aws-sdk-rdsdataservice
+      retriable
 
 GEM
   remote: https://rubygems.org/
@@ -96,8 +97,8 @@ GEM
       rake
       thor (>= 0.14.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.260.0)
-    aws-sdk-core (3.86.0)
+    aws-partitions (1.265.0)
+    aws-sdk-core (3.89.1)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
@@ -152,6 +153,7 @@ GEM
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
     rake (13.0.1)
+    retriable (3.1.2)
     ruby-progressbar (1.10.1)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
