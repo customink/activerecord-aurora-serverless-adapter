@@ -12,13 +12,16 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/customink/activerecord-aurora-serverless-adapter'
   spec.license       = 'MIT'
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+    `git ls-files -z`.split("\x0").reject do |f|
+      f.match(%r{^(test|spec|features|docker)/i})
+    end
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
   spec.add_runtime_dependency     'activerecord', '>= 6.0'
   spec.add_runtime_dependency     'aws-sdk-rdsdataservice'
+  spec.add_runtime_dependency     'retriable'
   spec.add_development_dependency 'appraisal'
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'minitest'

@@ -23,6 +23,14 @@ module ActiveRecord
           "#<#{self.class} database: #{database.inspect}, raw_client: #{raw_client.inspect}>"
         end
 
+        def execute_statement_retry(sql)
+          if @connected
+            execute_statement(sql)
+          else
+            auto_paused_retry { execute_statement(sql) }
+          end
+        end
+
         def execute_statement(sql)
           id = @transactions.first
           debug_transactions "EXECUTE: #{sql}", id
@@ -34,6 +42,7 @@ module ActiveRecord
             include_result_metadata: true,
             transaction_id: id
           }).tap do |r|
+            @connected = true
             @affected_rows = affected_rows_result(r)
             @last_id = last_id_result(r)
           end
@@ -98,6 +107,22 @@ module ActiveRecord
           field = fields.last
           return unless field
           field.long_value || field.string_value || field.double_value
+        end
+
+        def auto_paused_retry
+          error_klass = Aws::RDSDataService::Errors::BadRequestException
+          error_msg = /last packet sent successfully to the server was/
+          retry_msg = 'Aurora auto paused, retrying...'
+          on_retry = Proc.new { sleep(1) ; ::Rails.logger.info(retry_msg)  }
+          Retriable.retriable({
+            on: { error_klass => error_msg },
+            on_retry: on_retry,
+            tries: auto_paused_retry_count
+          }) { yield }
+        end
+
+        def auto_paused_retry_count
+          10
         end
 
         def debug_transactions(name, id = 'NOID')
