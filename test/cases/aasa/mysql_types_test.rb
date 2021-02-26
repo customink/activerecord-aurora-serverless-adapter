@@ -46,7 +46,7 @@ module ActiveRecord
         end
 
         it 'decimal_test' do
-          expect(value('decimal_test')).must_equal BigDecimal.new('676254.545')
+          expect(value('decimal_test')).must_equal BigDecimal('676254.545')
         end
 
         it 'date_test' do
