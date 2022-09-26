@@ -7,7 +7,7 @@
   "devDependencies": {
     "@aws-cdk/assert": "^1.19.0",
     "@types/node": "10.17.5",
-    "aws-cdk": "^1.19.0",
+    "aws-cdk": "^1.174.0",
     "ts-node": "^8.1.0",
     "typescript": "~3.7.2"
   },
